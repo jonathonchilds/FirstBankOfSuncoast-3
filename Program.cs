@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using CsvHelper;
 
 namespace FirstBankOfSuncoast
 {
@@ -37,6 +41,14 @@ namespace FirstBankOfSuncoast
         static void Main(string[] args)
         {
 
+            var transactions = new List<Transaction>();
+
+            var fileWriter = new StreamWriter("Transactions.csv");
+            var csvWriter = new CsvWriter(fileWriter, CultureInfo.InvariantCulture);
+            csvWriter.WriteRecords(transactions);
+
+
+
             var keepGoing = true;
             while (keepGoing)
             {
@@ -63,6 +75,8 @@ namespace FirstBankOfSuncoast
                 }
 
             }
+
+            fileWriter.Close();
         }
 
         public static void CheckingMenu()
@@ -77,10 +91,21 @@ namespace FirstBankOfSuncoast
                     DepositFunds(AccountType.Checking);
                     break;
                 case "W":
-                    Console.WriteLine($"How much would you like to withdraw?");
+                    WithdrawFunds(AccountType.Checking);
                     break;
                 default:
                     Console.WriteLine($"Wrong answer! Back to the main menu with you. 🥾💥 ");
+                    break;
+            }
+        }
+
+        public static void WithdrawFunds(AccountType accountType)
+        {
+            switch (accountType)
+            {
+                case AccountType.Checking:
+                    break;
+                case AccountType.Savings:
                     break;
             }
         }
@@ -91,14 +116,19 @@ namespace FirstBankOfSuncoast
             {
                 case AccountType.Checking:
                     break;
+                case AccountType.Savings:
+                    break;
             }
         }
 
-        private static void ShowBalance(AccountType accountType)
+        public static void ShowBalance(AccountType accountType)
         {
             switch (accountType)
             {
                 case AccountType.Checking:
+
+                    break;
+                case AccountType.Savings:
                     break;
             }
         }
@@ -109,13 +139,13 @@ namespace FirstBankOfSuncoast
             switch (savingsAnswer)
             {
                 case "V":
-                    Console.WriteLine($"Here is your balance: ");
+                    ShowBalance(AccountType.Savings);
                     break;
                 case "D":
-                    Console.WriteLine($"How much do you wanna deposit?");
+                    DepositFunds(AccountType.Savings);
                     break;
                 case "W":
-                    Console.WriteLine($"How much would you like to withdraw?");
+                    WithdrawFunds(AccountType.Savings);
                     break;
                 default:
                     Console.WriteLine($"Wrong answer! Back to the main menu with you. 🥾💥 ");
