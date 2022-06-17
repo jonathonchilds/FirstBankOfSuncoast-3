@@ -2,6 +2,11 @@
 
 namespace FirstBankOfSuncoast
 {
+    enum AccountType
+    {
+        Checking, Savings
+    }
+
     class Program
     {
         static string PromptForString(string prompt)
@@ -62,14 +67,14 @@ namespace FirstBankOfSuncoast
 
         public static void CheckingMenu()
         {
-            var checkingAnswer = PromptForString("What would you like to do? (V)iew balance (D)eposit (W)ithdraw");
+            var checkingAnswer = PromptForString("What would you like to do? (V)iew balance (D)eposit (W)ithdraw \n");
             switch (checkingAnswer)
             {
                 case "V":
-                    Console.WriteLine($"Here is your balance: ");
+                    ShowBalance(AccountType.Checking);
                     break;
                 case "D":
-                    Console.WriteLine($"How much do you wanna deposit?");
+                    DepositFunds(AccountType.Checking);
                     break;
                 case "W":
                     Console.WriteLine($"How much would you like to withdraw?");
@@ -80,9 +85,27 @@ namespace FirstBankOfSuncoast
             }
         }
 
+        public static void DepositFunds(AccountType accountType)
+        {
+            switch (accountType)
+            {
+                case AccountType.Checking:
+                    break;
+            }
+        }
+
+        private static void ShowBalance(AccountType accountType)
+        {
+            switch (accountType)
+            {
+                case AccountType.Checking:
+                    break;
+            }
+        }
+
         public static void SavingsMenu()
         {
-            var savingsAnswer = PromptForString("What would you like to do? (V)iew balance (D)eposit (W)ithdraw");
+            var savingsAnswer = PromptForString("What would you like to do? (V)iew balance (D)eposit (W)ithdraw \n");
             switch (savingsAnswer)
             {
                 case "V":
