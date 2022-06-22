@@ -15,7 +15,7 @@ namespace FirstBankOfSuncoast
         public string Memo { get; set; }
 
         // transaction type (withdraw & deposit)
-        public string Type { get; set; }
+        public TransactionType Type { get; set; }
 
         // account (checking / savings)
         public AccountType Account { get; set; }
