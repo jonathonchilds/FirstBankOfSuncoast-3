@@ -31,6 +31,7 @@ namespace FirstBankOfSuncoast
             Console.Write(prompt);
             Console.Write("\n> ");
             var userInput = Console.ReadLine();
+            Console.WriteLine();
             return userInput.ToUpper();
         }
 
@@ -40,6 +41,8 @@ namespace FirstBankOfSuncoast
             Console.Write("\n> ");
             int userInput;
             var isThisGoodInput = Int32.TryParse(Console.ReadLine(), out userInput);
+            Console.WriteLine();
+
             if (isThisGoodInput)
             {
                 return userInput;
@@ -60,11 +63,13 @@ namespace FirstBankOfSuncoast
             Transactions = csvReader.GetRecords<Transaction>().ToList();
             fileReader.Close();
 
+            Introduction();
+
             var keepGoing = true;
             while (keepGoing)
             {
 
-                var userAnswer = PromptForMenuString("Which account do you want? \n(C)hecking \n(S)avings \n(V)iew balance \n(Q)uit");
+                var userAnswer = PromptForMenuString("Which account do you want? \n\n(C)hecking \n(S)avings \n(V)iew balance \n(Q)uit");
 
                 // to (V)iew
                 switch (userAnswer)
@@ -92,9 +97,14 @@ namespace FirstBankOfSuncoast
             }
         }
 
+        public static void Introduction()
+        {
+            Console.WriteLine($"\n \n Welcome to First Bank of Suncoast! \n \n");
+        }
+
         public static void CheckingMenu()
         {
-            var checkingAnswer = PromptForMenuString("What would you like to do? (V)iew balance (D)eposit (W)ithdraw \n");
+            var checkingAnswer = PromptForMenuString("What would you like to do? (V)iew balance (D)eposit (W)ithdraw");
             switch (checkingAnswer)
             {
                 case "V":
@@ -128,16 +138,22 @@ namespace FirstBankOfSuncoast
             switch (accountType)
             {
                 case AccountType.Checking:
-                    var newTransaction = new Transaction();
-                    var depositAmount = PromptForInteger("How much would you like to deposit?");
-                    newTransaction.Memo = PromptForString("Please enter a memo for this transaction, punk.");
-                    newTransaction.Date = DateTime.Now;
-                    newTransaction.Amount = depositAmount;
-                    newTransaction.Type = TransactionType.Credit;
-                    Transactions.Add(newTransaction);
+                    DepositPrompts();
                     break;
                 case AccountType.Savings:
+                    DepositPrompts();
                     break;
+            }
+
+            static void DepositPrompts()
+            {
+                var newTransaction = new Transaction();
+                var depositAmount = PromptForInteger("How much would you like to deposit?");
+                newTransaction.Memo = PromptForString("Please enter a memo for this transaction:");
+                newTransaction.Date = DateTime.Now;
+                newTransaction.Amount = depositAmount;
+                newTransaction.Type = TransactionType.Credit;
+                Transactions.Add(newTransaction);
             }
         }
 
